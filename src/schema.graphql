@@ -1,0 +1,37 @@
+# import * from "./generated/prisma.graphql"
+
+type Query {
+  feed: [Post!]!
+  drafts: [Post!]!
+  post(id: ID!): Post
+  courseFeed(
+    first: Int
+    skip: Int
+    filter: String
+    orderBy: CourseOrderByInput
+  ): CourseFeed!
+  course(id: ID!): Course!
+}
+type CourseFeed {
+  courses: [Course!]!
+  count: Int!
+}
+type AuthPayload {
+  token: String!
+  user: User
+}
+type User {
+  id: ID!
+  email: String!
+}
+
+type Mutation {
+  createDraft(title: String!, text: String): Post
+  createCourse(name: String!, description: String!): Course
+  updateCourse(id: ID!, name: String, description: String): Course
+  deleteCourse(id: ID!): Course
+  deletePost(id: ID!): Post
+  publish(id: ID!): Post
+  signup(email: String!, password: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+}
