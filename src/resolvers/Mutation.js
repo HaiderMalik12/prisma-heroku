@@ -32,9 +32,16 @@ function createCourse(parent, { name, description }, ctx, info) {
 }
 function updateCourse(parent, { id, name, description }, ctx, info) {
 	const userId = getUserId(ctx);
+	const data = {};
+	if (description) {
+		data.description = description;
+	}
+	if (name) {
+		data.name = name;
+	}
 	return ctx.db.mutation.updateCourse(
 		{
-			data: { name, description },
+			data,
 			where: { id: id }
 		},
 		info
